@@ -1519,6 +1519,15 @@ pub type JSModuleNormalizeFunc = ::core::option::Option<
         opaque: *mut ::core::ffi::c_void,
     ) -> *mut ::core::ffi::c_char,
 >;
+pub type JSModuleNormalizeFunc2 = ::core::option::Option<
+    unsafe extern "C" fn(
+        ctx: *mut JSContext,
+        module_base_name: *const ::core::ffi::c_char,
+        module_name: *const ::core::ffi::c_char,
+        attributes: JSValue,
+        opaque: *mut ::core::ffi::c_void,
+    ) -> *mut ::core::ffi::c_char,
+>;
 pub type JSModuleLoaderFunc = ::core::option::Option<
     unsafe extern "C" fn(
         ctx: *mut JSContext,
@@ -1557,6 +1566,9 @@ unsafe extern "C" {
         module_check_attrs: JSModuleCheckSupportedImportAttributes,
         opaque: *mut ::core::ffi::c_void,
     );
+}
+unsafe extern "C" {
+    pub fn JS_SetModuleNormalizeFunc2(rt: *mut JSRuntime, module_normalize: JSModuleNormalizeFunc2);
 }
 unsafe extern "C" {
     pub fn JS_GetImportMeta(ctx: *mut JSContext, m: *mut JSModuleDef) -> JSValue;
